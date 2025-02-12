@@ -1,11 +1,19 @@
 "use client"
 
-import * as React from "react"
+import React, {useState} from "react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { MessagesContext } from "@/context/MessagesContext";
 
 export function ThemeProvider({
   children,
   ...props
 }) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+
+  const [messages, setMessages] = useState('');
+
+  return (
+    <MessagesContext.Provider value={{messages, setMessages}}>
+      <NextThemesProvider {...props}>{children}</NextThemesProvider>
+    </MessagesContext.Provider>
+  );
 }
