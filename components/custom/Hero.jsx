@@ -40,6 +40,7 @@ const Hero = () => {
         });
 
         console.log(workspaceId);
+        setUserPrompt('');
         router.push('/workspace/' + workspaceId)
     }
     return (
@@ -49,7 +50,7 @@ const Hero = () => {
                 <p className="text-lg mt-4 text-gray-400">{Lookup.HERO_DESC}</p>
 
                 <div className="flex rounded-md mt-8 h-16 w-[30vw]">
-                    <input onChange={(e) => setUserPrompt(e.target.value)} type="text" className="h-full w-[90%] px-4 outline-none rounded-l-md" placeholder={Lookup.INPUT_PLACEHOLDER} name="prompt" />
+                    <input value={userPrompt} onChange={(e) => setUserPrompt(e.target.value)} type="text" className="h-full w-[90%] px-4 outline-none rounded-l-md" placeholder={Lookup.INPUT_PLACEHOLDER} name="prompt" />
                     <ArrowRight onClick={() => onGenerate(userPrompt)} size={40} className="cursor-pointer w-[10%] font-bold bg-purple-700  text-white rounded-r-md h-full p-4" />
                 </div>
             </div>

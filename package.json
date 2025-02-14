@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.19.11",
     "@google/generative-ai": "^0.21.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
@@ -25,6 +26,8 @@
     "react": "^18.0.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.0.0",
+    "react-markdown": "^9.0.3",
+    "sandpack-file-explorer": "^0.0.7",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid4": "^2.0.3"
