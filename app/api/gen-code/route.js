@@ -8,6 +8,7 @@ export async function POST(req) {
         const result = await GenAiCode.sendMessage(prompt);
         const Modelres = result.response.text();
 
+        console.log('Model response:', Modelres);
         return NextResponse.json(JSON.parse(Modelres)); 
     }catch(e){
         return NextResponse.json({error:e}); 
