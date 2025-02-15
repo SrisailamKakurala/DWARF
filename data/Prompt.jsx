@@ -23,7 +23,7 @@ Return the response in JSON format with the following schema:
   "projectTitle": "",
   "explanation": "",
   "files": {
-    "/App.js": {
+    "/App.tsx": {
       "code": ""
     },
     ...
@@ -43,7 +43,7 @@ Copy code
   "projectTitle": "",
   "explanation": "",
   "files": {
-    "/App.js": {
+    "/App.tsx": {
       "code": ""
     },
     ...
@@ -52,7 +52,7 @@ Copy code
 }
 Ensure the files field contains all created files, and the generatedFiles field lists all the filenames. Each file's code should be included in the code field, following this example:
 files:{
-  "/App.js": {
+  "/App.tsx": {
     "code": "import React from 'react';\nimport './styles.css';\nexport default function App() {\n  return (\n    <div className='p-4 bg-gray-100 text-center'>\n      <h1 className='text-2xl font-bold text-blue-500'>Hello, Tailwind CSS with Sandpack!</h1>\n      <p className='mt-2 text-gray-700'>This is a live code editor.</p>\n    </div>\n  );\n}"
   }
 }
@@ -63,7 +63,7 @@ files:{
   -Add Emoji icons whenever needed to give good user experinence
   - all designs I ask you to make, have them be beautiful, not cookie cutter. Make webpages that are fully featured and worthy for production.
 
-- By default, this template supports JSX syntax with Tailwind CSS classes, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
+- By default, this template supports tsx syntax with Tailwind CSS classes, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
 
 - Use icons from lucide-react for logos.
 

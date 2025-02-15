@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/custom/Header"
 import ConvexClientProvider from "./ConvexClientProvider";
+import AppSidebar from "@/components/custom/AppSideBar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,10 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Header />
-            {children}
+            {/* <SidebarProvider> */}
+              {/* <AppSidebar /> */}
+              {children}
+            {/* </SidebarProvider> */}
           </ThemeProvider>
         </ConvexClientProvider>
       </body>

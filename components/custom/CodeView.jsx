@@ -14,12 +14,33 @@ import axios from "axios";
 import Prompt from "@/data/Prompt";
 import { useContext, useEffect, useState } from "react";
 import { SandpackFileExplorer } from "sandpack-file-explorer";
+import { useConvex, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useParams } from "next/navigation";
 
 const CodeView = () => {
+  const {id} = useParams();
   const [activeTab, setActiveTab] = useState("code");
+  const [isLoading, setIsLoading] = useState(false);
   const [files, setFiles] = useState(structuredClone(Lookup.DEFAULT_FILE));
   const { messages } = useContext(MessagesContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const UpdateFiles = useMutation(api.workspace.UpdateFiles);
+  const convex = useConvex();
+
+  useEffect(() => {
+    id && GetFiles();
+  }, [id]);
+
+  const GetFiles = async () => {
+    setIsLoading(true);
+    const result = await convex.query(api.workspace.GetWorkspace, {
+      workspaceId: id,
+    });
+    console.log(result?.fileData);
+    const mergedFiles = {...Lookup.DEFAULT_FILE, ...result?.fileData};
+    setFiles(mergedFiles);
+    setIsLoading(false);
+  }
 
   useEffect(() => {
     if (messages?.length > 0) {
@@ -33,8 +54,7 @@ const CodeView = () => {
   const GenerateAiCode = async () => {
     try {
       setIsLoading(true);
-      const PROMPT =
-        messages[messages.length - 1]?.content + " " + Prompt.CODE_GEN_PROMPT;
+      const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
       const result = await axios.post("/api/gen-code", {
         prompt: PROMPT,
       });
@@ -72,6 +92,12 @@ const CodeView = () => {
       
       console.log("mergedFiles:", mergedFiles);
       setFiles(mergedFiles);
+
+      await UpdateFiles({
+        workspaceId: id,
+        files: mergedFiles,
+      })
+
     } catch (error) {
       console.error("Error generating code:", error);
     } finally {
@@ -97,7 +123,7 @@ const CodeView = () => {
         </div>
       )}
       
-      <div className="flex gap-3 mb-2">
+      <div className="flex gap-3 p-2 bg-[#151515]">
         <h1
           onClick={() => setActiveTab("code")}
           className={`${
@@ -119,6 +145,7 @@ const CodeView = () => {
       {/* Ensure files is defined before rendering Sandpack */}
       {files && (
         <SandpackProvider
+          activeTab={'index.tsx'}
           key={JSON.stringify(files)}
           template="react-ts"
           files={files}
@@ -139,7 +166,7 @@ const CodeView = () => {
               <SandpackLayout style={{ height: "80vh" }}>
                 {activeTab == "code" ? (
                   <>
-                    <SandpackFileExplorer />
+                    <SandpackFileExplorer activeTab={'index.tsx'} />
                     <SandpackCodeEditor
                       wrapContent
                       style={{
